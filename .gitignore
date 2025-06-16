@@ -7,7 +7,8 @@ cron.log
 .env
 
 # Docs build artifacts
-# Keep index.html for GitHub Pages, ignore everything else
+# Keep index.html and stats.html for GitHub Pages, ignore everything else
 !docs/index.html
+!docs/stats.html
 docs/*.js
 docs/*.css

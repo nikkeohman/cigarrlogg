@@ -1,78 +1,86 @@
 # README.md
-# 🤻 Cigar Humidor Logger
+# 🌬️ Cigar Humidor Logger
 
-A lightweight, cloud-synced monitoring tool for your cigar humidor — log temperature and humidity with a 1-Wire sensor, generate interactive graphs, and publish to a GitHub Pages website.
+A lightweight, cloud-synced monitoring tool for your cigar humidor — log temperature and humidity with a 1-Wire sensor, generate interactive graphs, and publish to a modern GitHub Pages website.
 
 ## 📦 Features
 
-- Reads data from 1-Wire temperature and humidity sensors (e.g. DS2438 + SHT1x)
-- Stores logs in a local SQLite database
-- Visualizes data with interactive Plotly graphs
-- Includes quote-of-the-day from a large cigar quote collection
-- Publishes to GitHub Pages via a single shell script
-- Easy to set up and extend
+- 🔌 Reads data from 1-Wire temperature and humidity sensors (e.g. DS2438 + SHT1x)
+- 📊 Interactive charts with Plotly
+- 🧠 Local SQLite database with historical data and statistics
+- 🛨️ Quote-of-the-day from a curated cigar quote collection
+- 🌐 Publishes to GitHub Pages
+- 🛠️ One-line setup with `setup.sh`
 
-## 🔧 Setup
+## 🚀 Quick Start
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/nikkeohman/cigarrlogg.git
-   cd cigarrlogg
-   ```
-
-2. **Run the setup script (do not use sudo):**
-   ```bash
-   ./setup.sh
-   ```
-
-3. **Optional: Set up automatic logging via `cron`.**
-   Example to log every 10 minutes:
-   ```bash
-   crontab -e
-   ```
-   Add:
-   ```cron
-   */10 * * * * /home/youruser/cigarrlogg/update.sh >> /home/youruser/cigarrlogg/cron.log 2>&1
-   ```
-
-4. **Your site will be generated in the `docs/` folder.**
-   Enable GitHub Pages in your repo settings with `docs/` as the source.
-
-## 🔁 Updating
-
-To manually log and update:
 ```bash
-./update.sh
+git clone https://github.com/nikkeohman/cigarrlogg.git
+cd cigarrlogg
+./setup.sh
 ```
 
-## 📂 Project Structure
+## ⏱️ Automation
 
-- `log_cigarr.py` – reads sensor data and stores it in `cigarrdata.db`
-- `generate_html.py` – creates an interactive web page with latest and historical data
-- `quotes_with_authors.json` – your quote collection
-- `docs/index.html` – generated output for GitHub Pages
-- `update.sh` – logs, generates HTML, commits and pushes
+Enable automatic logging every 10 minutes via cron:
 
-## 🧠 Data Insights
+```bash
+crontab -e
+```
+Add:
+```cron
+*/10 * * * * /home/youruser/cigarrlogg/update.sh >> /home/youruser/cigarrlogg/cron.log 2>&1
+```
 
-- The homepage displays the latest temperature and humidity readings.
-- Charts include trends over time, and summaries of min/avg/max for day, week, month, year.
-- Data is stored locally in a SQLite database.
+## 📂 Project Layout
+
+- `log_cigarr.py` – log sensor data
+- `generate_html.py` – build interactive website
+- `quotes_with_authors.json` – cigar quote collection
+- `docs/index.html` – published web output
+- `docs/stats.html` – detailed statistics
+- `update.sh` – automation script
+- `setup.sh` – install everything in one go
+- `cigarrdata.db` – SQLite database
+
+## 🧠 Insights on the Site
+
+- ✅ Latest temperature and humidity at the top
+- 📈 Graphs for trends
+- 📉 Min, Max, Average stats for: 24h, 7d, 30d, 365d
+- 📜 Quotes include author attribution
+- 🌐 [New] Dedicated statistics page with historical trends
+
+## 🌐 Publishing
+
+Make sure your GitHub repo has GitHub Pages enabled with:
+```
+/docs
+```
+as the publishing folder.
 
 ## 📜 Requirements
 
-- Raspberry Pi or Linux with 1-Wire support (e.g. DS9490R USB adapter)
+- Raspberry Pi or Linux machine with 1-Wire support
 - Python 3.9+
-- GitHub account for publishing
+- GitHub account
+
+## 🎨 Roadmap Ideas
+
+- Modern dark/light UI switch
+- Mobile-friendly layout
+- Export to CSV or JSON
+- Cigar inventory management
+- Alerts (email, Telegram, Discord)
 
 ## 🤝 Contributions
 
-Feel free to fork and improve! Pull requests welcome — especially for:
+PRs are welcome! Improvements to:
 
-- New features (e.g. alerts, export, more sensors)
-- Design/UI improvements
-- More cigar quotes!
+- UI and layout
+- More cigar quotes
+- Feature requests
 
-## 📃 License
+## 🪪 License
 
-MIT License
+MIT License — Enjoy responsibly.
