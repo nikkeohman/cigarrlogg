@@ -1,9 +1,9 @@
 {
-  "generated_at": "2025-06-16T23:30:05.788500",
+  "generated_at": "2025-06-16T23:45:03.998747",
   "latest": {
-    "timestamp": "2025-06-16T23:30:02",
-    "temperature": 24.0,
-    "humidity": 61.92
+    "timestamp": "2025-06-16T23:45:02",
+    "temperature": 24.03,
+    "humidity": 61.78
   },
   "statistics": {
     "Last 24 hours": {
