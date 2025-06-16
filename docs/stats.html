@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cigar Humidor Statistics</title>
+    <link rel="icon" href="favicon.ico">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+                         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1 {
+            margin-bottom: 0.25em;
+        }
+        .back {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .back a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        .stat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+        .stat-table th, .stat-table td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .chart {
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📊 Cigar Humidor Statistics</h1>
+        <p>Detailed historical insights</p>
+    </header>
+    <main>
+        <div class="back">
+            <a href="index.html">← Back to overview</a>
+        </div>
+
+        <h2>📈 Summary Statistics</h2>
+        <table class="stat-table">
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Avg Temp (°C)</th>
+                    <th>Min Temp</th>
+                    <th>Max Temp</th>
+                    <th>Avg Humidity (%)</th>
+                    <th>Min Humidity</th>
+                    <th>Max Humidity</th>
+                </tr>
+            </thead>
+            <tbody id="stats-body">
+                <!-- Populated via JS -->
+            </tbody>
+        </table>
+
+        <h2>📉 Interactive Charts</h2>
+        <div class="chart" id="tempChart"></div>
+        <div class="chart" id="humChart"></div>
+    </main>
+
+    <script>
+        fetch('stats_data.json')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById("stats-body");
+                data.statistics.forEach(row => {
+                    tbody.innerHTML += `<tr>
+                        <td>${row.period}</td>
+                        <td>${row.avg_temp.toFixed(2)}</td>
+                        <td>${row.min_temp.toFixed(2)}</td>
+                        <td>${row.max_temp.toFixed(2)}</td>
+                        <td>${row.avg_hum.toFixed(2)}</td>
+                        <td>${row.min_hum.toFixed(2)}</td>
+                        <td>${row.max_hum.toFixed(2)}</td>
+                    </tr>`;
+                });
+
+                Plotly.newPlot('tempChart', [{
+                    x: data.history.map(r => r.timestamp),
+                    y: data.history.map(r => r.temperature),
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    name: 'Temperature',
+                    line: { color: '#d14' }
+                }], {
+                    title: 'Temperature Over Time',
+                    xaxis: { title: 'Time' },
+                    yaxis: { title: '°C' }
+                });
+
+                Plotly.newPlot('humChart', [{
+                    x: data.history.map(r => r.timestamp),
+                    y: data.history.map(r => r.humidity),
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    name: 'Humidity',
+                    line: { color: '#1a6' }
+                }], {
+                    title: 'Humidity Over Time',
+                    xaxis: { title: 'Time' },
+                    yaxis: { title: '%' }
+                });
+            });
+    </script>
+</body>
+</html>
