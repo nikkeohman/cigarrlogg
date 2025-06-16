@@ -1,65 +1,78 @@
-# Cigarrlogg
+# README.md
+# 🤻 Cigar Humidor Logger
 
-This project logs temperature and humidity in a cigar humidor using 1-Wire sensors on a Raspberry Pi, stores the data in a SQLite database, and generates a stylish HTML dashboard with charts and cigar quotes. Everything is automatically deployed to GitHub Pages.
+A lightweight, cloud-synced monitoring tool for your cigar humidor — log temperature and humidity with a 1-Wire sensor, generate interactive graphs, and publish to a GitHub Pages website.
 
-## Features
+## 📦 Features
 
-- 🕒 Timestamps, 🌡️ Temperature, 💧 Humidity
-- 📜 Random cigar quotes stored in the database
-- 📈 Historical data shown as interactive Plotly charts
-- 🧠 Logs new data and generates HTML with a single script
-- ☁️ Hosted on GitHub Pages for free public access
+- Reads data from 1-Wire temperature and humidity sensors (e.g. DS2438 + SHT1x)
+- Stores logs in a local SQLite database
+- Visualizes data with interactive Plotly graphs
+- Includes quote-of-the-day from a large cigar quote collection
+- Publishes to GitHub Pages via a single shell script
+- Easy to set up and extend
 
-## Repository Structure
+## 🔧 Setup
 
-```
-├── cigarrdata.db          # SQLite database
-├── docs/
-│   └── index.html         # Generated HTML page
-├── log_cigarr.py          # Script for logging sensor data
-├── generate_html.py       # Script for generating HTML from database
-├── quotes.txt             # Optional: quotes to import
-├── update.sh              # Runs both scripts and pushes to GitHub
-├── README.md              # You're reading this
-```
-
-## Requirements
-
-- Python 3
-- Plotly
-- SQLite3
-- Git
-
-## Setup (on Raspberry Pi)
-
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/nikkeohman/cigarrlogg.git
    cd cigarrlogg
    ```
-2. Create a Python virtual environment:
+
+2. **Run the setup script (do not use sudo):**
    ```bash
-   python3 -m venv ~/cigarr-venv
-   source ~/cigarr-venv/bin/activate
-   pip install plotly
+   ./setup.sh
    ```
-3. Add your GitHub token to `.netrc` (for automated pushes):
-   ```bash
-   machine github.com
-     login <your_username>
-     password <your_token>
-   ```
-4. Set up crontab:
+
+3. **Optional: Set up automatic logging via `cron`.**
+   Example to log every 10 minutes:
    ```bash
    crontab -e
-   # Add the following line:
-   */60 * * * * cd /home/pi/cigarrlogg && ./update.sh
+   ```
+   Add:
+   ```cron
+   */10 * * * * /home/youruser/cigarrlogg/update.sh >> /home/youruser/cigarrlogg/cron.log 2>&1
    ```
 
-## Example Output
+4. **Your site will be generated in the `docs/` folder.**
+   Enable GitHub Pages in your repo settings with `docs/` as the source.
 
-![screenshot](docs/screenshot.png)
+## 🔁 Updating
 
-## License
+To manually log and update:
+```bash
+./update.sh
+```
 
-MIT License — feel free to fork and improve!
+## 📂 Project Structure
+
+- `log_cigarr.py` – reads sensor data and stores it in `cigarrdata.db`
+- `generate_html.py` – creates an interactive web page with latest and historical data
+- `quotes_with_authors.json` – your quote collection
+- `docs/index.html` – generated output for GitHub Pages
+- `update.sh` – logs, generates HTML, commits and pushes
+
+## 🧠 Data Insights
+
+- The homepage displays the latest temperature and humidity readings.
+- Charts include trends over time, and summaries of min/avg/max for day, week, month, year.
+- Data is stored locally in a SQLite database.
+
+## 📜 Requirements
+
+- Raspberry Pi or Linux with 1-Wire support (e.g. DS9490R USB adapter)
+- Python 3.9+
+- GitHub account for publishing
+
+## 🤝 Contributions
+
+Feel free to fork and improve! Pull requests welcome — especially for:
+
+- New features (e.g. alerts, export, more sensors)
+- Design/UI improvements
+- More cigar quotes!
+
+## 📃 License
+
+MIT License

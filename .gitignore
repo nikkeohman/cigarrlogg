@@ -1,0 +1,13 @@
+# .gitignore
+__pycache__/
+cigarr-venv/
+cigarrdata.db
+*.pyc
+cron.log
+.env
+
+# Docs build artifacts
+# Keep index.html for GitHub Pages, ignore everything else
+!docs/index.html
+docs/*.js
+docs/*.css
