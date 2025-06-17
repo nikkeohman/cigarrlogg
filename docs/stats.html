@@ -50,6 +50,13 @@
         .graph-container {
             margin-top: 2rem;
         }
+        #timestamp {
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+            margin-top: -1.5rem;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +64,7 @@
         <h1>📈 Humidor Stats</h1>
     </header>
     <main>
+        <div id="timestamp"></div>
         <section id="stats">
             <h2>Summary Statistics</h2>
             <div class="stats-container" id="stats-cards"></div>
@@ -73,8 +81,25 @@
     <script>
         fetch('stats_data.json')
             .then(response => response.json())
-            .then(data => {
+            .then(json => {
                 const container = document.getElementById('stats-cards');
+                const stats = json.statistics;
+
+                // Set timestamp
+                const tsDiv = document.getElementById('timestamp');
+                tsDiv.textContent = `📅 Updated: ${new Date(json.generated_at).toLocaleString()}`;
+
+                const data = Object.entries(stats).map(([period, values]) => {
+                    return {
+                        period,
+                        avg_temp: values.temperature.average,
+                        min_temp: values.temperature.min,
+                        max_temp: values.temperature.max,
+                        avg_hum: values.humidity.average,
+                        min_hum: values.humidity.min,
+                        max_hum: values.humidity.max
+                    };
+                });
 
                 data.forEach(stat => {
                     const card = document.createElement('div');
@@ -91,7 +116,6 @@
                     container.appendChild(card);
                 });
 
-                // Optional: Bar chart of averages
                 const periods = data.map(d => d.period);
                 const avgTemps = data.map(d => d.avg_temp);
                 const avgHums = data.map(d => d.avg_hum);
