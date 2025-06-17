@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humidor Statistics</title>
+    <title>Humidor Overview</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <style>
@@ -61,7 +61,7 @@
 </head>
 <body>
     <header>
-        <h1>📈 Humidor Stats</h1>
+        <h1>📈 Humidor Overview</h1>
     </header>
     <main>
         <div id="timestamp"></div>
@@ -85,7 +85,6 @@
                 const container = document.getElementById('stats-cards');
                 const stats = json.statistics;
 
-                // Set timestamp
                 const tsDiv = document.getElementById('timestamp');
                 tsDiv.textContent = `📅 Updated: ${new Date(json.generated_at).toLocaleString()}`;
 
@@ -121,11 +120,27 @@
                 const avgTemps = data.map(d => d.avg_temp);
                 const avgHums = data.map(d => d.avg_hum);
 
+                const centerTemp = avgTemps.reduce((a, b) => a + b, 0) / avgTemps.length;
+                const tempRange = [centerTemp - 5, centerTemp + 5];
+
+                const centerHum = avgHums.reduce((a, b) => a + b, 0) / avgHums.length;
+                const humRange = [centerHum - 5, centerHum + 5];
+
                 const layout = {
                     title: 'Average Temperature and Humidity',
                     barmode: 'group',
                     xaxis: { title: 'Period' },
-                    yaxis: { title: 'Value' }
+                    yaxis: {
+                        title: 'Temperature (°C)',
+                        range: tempRange
+                    },
+                    yaxis2: {
+                        title: 'Humidity (%)',
+                        overlaying: 'y',
+                        side: 'right',
+                        range: humRange
+                    },
+                    responsive: true
                 };
 
                 const chartData = [
@@ -133,17 +148,21 @@
                         x: periods,
                         y: avgTemps,
                         name: 'Avg Temp (°C)',
-                        type: 'bar'
+                        type: 'bar',
+                        marker: { color: '#FF7F0E' },
+                        yaxis: 'y'
                     },
                     {
                         x: periods,
                         y: avgHums,
                         name: 'Avg Humidity (%)',
-                        type: 'bar'
+                        type: 'bar',
+                        marker: { color: '#1F77B4' },
+                        yaxis: 'y2'
                     }
                 ];
 
-                Plotly.newPlot('graph', chartData, layout);
+                Plotly.newPlot('graph', chartData, layout, {responsive: true});
             })
             .catch(err => {
                 document.getElementById('stats').innerHTML = '<p>Failed to load stats data.</p>';
