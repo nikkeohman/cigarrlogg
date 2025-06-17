@@ -1,9 +1,9 @@
 {
-  "generated_at": "2025-06-17T09:24:17.802950",
+  "generated_at": "2025-06-17T09:30:06.464822",
   "latest": {
-    "timestamp": "2025-06-17T09:24:16",
-    "temperature": 24.09,
-    "humidity": 62.63
+    "timestamp": "2025-06-17T09:30:03",
+    "temperature": 23.97,
+    "humidity": 62.89
   },
   "statistics": {
     "Last 24 hours": {
@@ -13,7 +13,7 @@
         "max": 24.22
       },
       "humidity": {
-        "average": 62.08,
+        "average": 62.09,
         "min": 59.25,
         "max": 63.66
       }
@@ -25,7 +25,7 @@
         "max": 24.22
       },
       "humidity": {
-        "average": 62.08,
+        "average": 62.09,
         "min": 59.25,
         "max": 63.66
       }
@@ -37,7 +37,7 @@
         "max": 24.22
       },
       "humidity": {
-        "average": 62.08,
+        "average": 62.09,
         "min": 59.25,
         "max": 63.66
       }
@@ -49,7 +49,7 @@
         "max": 24.22
       },
       "humidity": {
-        "average": 62.08,
+        "average": 62.09,
         "min": 59.25,
         "max": 63.66
       }
