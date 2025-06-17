@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humidor Statistics</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,8 +89,9 @@
                 const tsDiv = document.getElementById('timestamp');
                 tsDiv.textContent = `📅 Updated: ${new Date(json.generated_at).toLocaleString()}`;
 
-                const data = Object.entries(stats).map(([period, values]) => {
-                    return {
+                const data = [];
+                for (const [period, values] of Object.entries(stats)) {
+                    data.push({
                         period,
                         avg_temp: values.temperature.average,
                         min_temp: values.temperature.min,
@@ -98,8 +99,8 @@
                         avg_hum: values.humidity.average,
                         min_hum: values.humidity.min,
                         max_hum: values.humidity.max
-                    };
-                });
+                    });
+                }
 
                 data.forEach(stat => {
                     const card = document.createElement('div');
