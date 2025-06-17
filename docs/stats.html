@@ -120,11 +120,11 @@
                 const avgTemps = data.map(d => d.avg_temp);
                 const avgHums = data.map(d => d.avg_hum);
 
-                const centerTemp = avgTemps.reduce((a, b) => a + b, 0) / avgTemps.length;
-                const tempRange = [centerTemp - 5, centerTemp + 5];
+                const latestTemp = json.latest.temperature;
+                const latestHum = json.latest.humidity;
 
-                const centerHum = avgHums.reduce((a, b) => a + b, 0) / avgHums.length;
-                const humRange = [centerHum - 5, centerHum + 5];
+                const tempRange = [latestTemp - 5, latestTemp + 5];
+                const humRange = [latestHum - 5, latestHum + 5];
 
                 const layout = {
                     title: 'Average Temperature and Humidity',
